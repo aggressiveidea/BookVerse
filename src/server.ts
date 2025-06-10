@@ -1,23 +1,26 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import { connect } from './database/db'; // Adjust path if needed
+import express from "express"
+import bookRouter from "./routes/book.router"
+import { ErrorHandler } from "./middlewares/errorHandler.middleware"
+import { connect } from "./database/db"
+import morgan from "morgan"
+const app = express()
+const PORT = process.env.PORT || 5000
 
-dotenv.config();
+connect()
 
-const app = express();
-app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(morgan('dev'))
+app.use("/api/books", bookRouter)
 
-async function startServer() {
-  try {
-    await connect(); // Connect to MongoDB first
-    app.listen(PORT, () => {
-      console.log(`Server's running on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Failed to start server:', error);
-  }
-}
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "Server is running!" })
+})
 
-startServer();
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
+  console.log(`API available at http://localhost:${PORT}/api/books`)
+})
