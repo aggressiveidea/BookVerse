@@ -4,7 +4,7 @@ import type { NextFunction, Request, RequestHandler, Response } from "express"
 
 export class ErrorHandler {
   /**
-   * @description Handles async request handlers and catches any errors
+   * @description handles async request handlers and catches any errors
    * @param handler the request handler function
    * @returns
    */
