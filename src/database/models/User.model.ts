@@ -25,12 +25,14 @@ export const Userschema = new Schema<User>({
       role : {
         type: String,
         trim: true,
-        required: true,
+        required: false,
         enum: ['user', 'admin'],
+        default: 'user'
     },
+
 },
     {
      timestamps: true,
     }
 );
-export const userModel = model<User>("Users", Userschema);
+export const userModel = model<User>("user", Userschema);
