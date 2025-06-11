@@ -30,7 +30,6 @@ export class AuthService {
   }
 
   static async Register(
-    id: string,
     email: string,
     firstName: string,
     lastName: string,
@@ -44,7 +43,6 @@ export class AuthService {
 
     const hashedPass = await bcryptUtil.hash(password);
     const user = await userModel.create({
-      id,
       email,
       password: hashedPass,
       firstName,

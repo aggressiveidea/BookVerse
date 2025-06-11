@@ -16,7 +16,7 @@ export class JwtUtil {
 
     static async verifyToken(token: string){
         try {
-            const secret = process.env.JWT_SECRET;
+            const secret = process.env.SECRET; 
             const payload = jwt.verify(token, secret);
             return payload;
         } catch (error) {
@@ -24,4 +24,4 @@ export class JwtUtil {
         }
     }
 }
-
+    
