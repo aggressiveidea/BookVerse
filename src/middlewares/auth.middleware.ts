@@ -23,7 +23,8 @@ export class authMiddleware {
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       const error = new ErrorResponseUtil().setError("token wasn't provided or malformed");
-      return res.status(StatusCodes.UNAUTHORIZED).json(error);
+      res.status(StatusCodes.UNAUTHORIZED).json(error);
+      return
     }
 
     const splited = authHeader.split(" "); 
@@ -33,14 +34,16 @@ export class authMiddleware {
 
     if (!data || !data.id) {
       const error = new ErrorResponseUtil().setError("The provided token is invalid");
-      return res.status(StatusCodes.UNAUTHORIZED).json(error);
+      res.status(StatusCodes.UNAUTHORIZED).json(error);
+      return
     }
 
     const user = await userModel.findById(data.id);
 
     if (!user) {
       const error = new ErrorResponseUtil().setError("The provided token is invalid");
-      return res.status(StatusCodes.UNAUTHORIZED).json(error);
+      res.status(StatusCodes.UNAUTHORIZED).json(error);
+      return
     }
 
     req.user = user;
@@ -48,7 +51,8 @@ export class authMiddleware {
   } catch (error) {
     console.error("auth error:", error);
     const errorResponse = new ErrorResponseUtil().setError("authentication error");
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    return
   }
 }
 

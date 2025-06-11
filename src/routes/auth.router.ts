@@ -1,9 +1,10 @@
-import { authController } from "../controllers/auth.controller";
-import { Router } from "express";
-import { bookValidatorMiddleware } from "../middlewares/validators/bookValidator.middleware";
+import { Router } from "express"
+import { validateRegister, validateLogin } from "../middlewares/validators/Validator.middleware"
+import { authController } from "../controllers/auth.controller"
 
-const router = Router();
-router.post('/login', bookValidatorMiddleware.logedInUser, authController.login);
-router.post('/register', bookValidatorMiddleware.registeredUser, authController.Register);
+const router = Router()
 
-export default router 
+router.post("/register", validateRegister, authController.Register)
+router.post("/login", validateLogin, authController.login)
+
+export default router
